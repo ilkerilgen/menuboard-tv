@@ -1,0 +1,17 @@
+# Build
+.gradle/
+build/
+app/build/
+*.apk
+*.aab
+
+# Keystore — ASLA public repoya girmesin (secret olarak saklanır)
+keystore/
+*.jks
+*.keystore
+
+# IDE / local
+.idea/
+local.properties
+*.iml
+.DS_Store

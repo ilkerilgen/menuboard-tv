@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="surface">#111316</color>
+    <color name="surface_lowest">#0c0e11</color>
+    <color name="primary_container">#801222</color>
+    <color name="secondary">#f2be71</color>
+    <color name="on_surface">#e2e2e6</color>
+</resources>
