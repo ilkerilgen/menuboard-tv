@@ -149,8 +149,8 @@ object UpdateManager {
                 )
                 if (status == PackageInstaller.STATUS_PENDING_USER_ACTION) {
                     // device owner değil → sistem onay ekranını göster.
-                    val confirm = @Suppress("DEPRECATION")
-                    (i.getParcelableExtra<Intent>(Intent.EXTRA_INTENT))
+                    @Suppress("DEPRECATION")
+                    val confirm = i.getParcelableExtra<Intent>(Intent.EXTRA_INTENT)
                     confirm?.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     confirm?.let { c.startActivity(it) }
                 } else {

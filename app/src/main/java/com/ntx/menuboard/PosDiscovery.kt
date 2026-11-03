@@ -7,6 +7,7 @@ import java.net.NetworkInterface
 import java.net.Socket
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicReference
 
 /**
  * Yerel ağda POSSAFE (arti POS backend) sunucusunu arar.
@@ -32,13 +33,13 @@ object PosDiscovery {
 
         val prefix = localSubnetPrefix() ?: return null
         val pool = Executors.newFixedThreadPool(32)
-        @Volatile var found: String? = null
+        val found = AtomicReference<String?>(null)
         try {
             for (i in 1..254) {
                 val host = "$prefix.$i"
                 pool.execute {
-                    if (found == null && isPosHost(host)) {
-                        synchronized(this) { if (found == null) found = host }
+                    if (found.get() == null && isPosHost(host)) {
+                        found.compareAndSet(null, host)
                     }
                 }
             }
@@ -50,11 +51,10 @@ object PosDiscovery {
             pool.shutdownNow()
         }
 
-        found?.let {
+        return found.get()?.also {
             Prefs.setPosIp(ctx, it)
             Log.i(TAG, "POSSAFE bulundu: $it:$POS_PORT")
         }
-        return found
     }
 
     private fun isPosHost(host: String): Boolean {
