@@ -205,3 +205,42 @@ svg.ic.prim{stroke:var(--primary);}
 /* ===================== PORTRAIT (1080×1920) ===================== */
 :root[data-orient="portrait"] .svc-grid{grid-template-columns:1fr;}
 :root[data-orient="portrait"] .hero-media{height:360px;}
+
+/* ======================= CİLA (v2) ======================= */
+#stage{
+  background-color:var(--surface);
+  background-image:
+    radial-gradient(130% 90% at 50% 0%, rgba(128,18,34,.10), transparent 45%),
+    radial-gradient(rgba(255,255,255,.016) 1px, transparent 1px);
+  background-size:auto, 3px 3px;
+  animation:mb-fade .6s ease both;
+}
+@keyframes mb-fade{from{opacity:0;}to{opacity:1;}}
+
+/* kategori başlığı: amber alt çizgi + çerçeveli birim rozeti */
+.cat-head{border-bottom:3px solid var(--secondary);}
+.cat-head .unit{padding:3px 11px; border:1px solid rgba(242,190,113,.4); border-radius:var(--r);}
+
+/* fiyat rozetlerinde ince amber kenar (DESIGN.md) */
+.r-price{border:1px solid rgba(242,190,113,.38);}
+.hero-price{border:1px solid rgba(242,190,113,.45);}
+
+/* dry-aged / amber rozet parıltısı */
+.b.amber,.b.dark,.r-chip.prim,.t-chip.amber{box-shadow:0 0 16px rgba(242,190,113,.26);}
+
+/* hero görseli: mermer damar + vinyet (fotoğraf gelene kadar şık dolgu) */
+.hero-media .scrim{
+  background:
+    linear-gradient(to top,var(--surface-container),rgba(30,32,35,.25) 55%,transparent),
+    radial-gradient(120% 90% at 76% 8%, rgba(255,255,255,.07), transparent 55%),
+    repeating-linear-gradient(118deg, transparent 0 26px, rgba(255,255,255,.018) 26px 27px);
+}
+
+/* noktalı leader: ad ↔ fiyat bağlantısı */
+.row{align-items:center;}
+.row .info{flex:0 1 auto; min-width:0;}
+.leader{flex:1 1 auto; align-self:center; height:0; margin:0 16px; min-width:16px;
+  border-bottom:2px dotted rgba(242,190,113,.28);}
+
+/* footer ince amber üst çizgi */
+.ftr{border-top:1px solid rgba(242,190,113,.22);}

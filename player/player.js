@@ -34,8 +34,8 @@
   function pad(n){ return (n<10?"0":"")+n; }
 
   function render(c) {
-    var o = (new URLSearchParams(location.search).get("o")) || c.orientation || "landscape";
-    if (o !== "portrait" && o !== "landscape") o = "landscape";
+    var o = (new URLSearchParams(location.search).get("o")) || c.orientation || "auto";
+    if (o !== "portrait" && o !== "landscape") o = (window.innerWidth >= window.innerHeight) ? "landscape" : "portrait";
     document.documentElement.setAttribute("data-orient", o);
     var ref = REF[o];
     document.documentElement.style.setProperty("--cw", ref[0] + "px");
@@ -103,6 +103,7 @@
         html += '<div class="row"><div class="info"><div class="name-line">' +
           '<span class="name">' + esc(r.name) + '</span>' + chip + '</div>' +
           '<span class="body sub">' + esc(r.sub) + '</span></div>' +
+          '<div class="leader"></div>' +
           '<div class="r-price"><span class="num">' + esc(r.price) + '</span><span class="cur">₺</span></div></div>';
       });
       html += '</div></div>';

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "orientation": "landscape",
+  "orientation": "auto",
   "business": {
     "name": "GURME KASAP",
     "sub": "DRY AGED",
