@@ -93,7 +93,7 @@ Klavye/mouse **hiç gerekmeden** çalışan appliance (Yodeck disiplini).
 - **Faz 1 (bitti):** Statik menü Player (TV app).
 - **Faz 2 (bitti):** Web Player (`player/`) — viewport scale-to-fit + auto-fit, veri-güdümlü (content.json), offline (localStorage+SW), cilalı tasarım, dikey/yatay. Canlı: claude.ai/artifact/NQCN5N3je5ycUC6XMXpELn. (Not: `:3001`'den canlı veri connector'a devredildi — §5.1 cloud-first.)
 - **Faz 4 — MVP (bitti):** Cloud backend (`cloud/server.js`, bağımlılıksız Node) — cihaz register/eşleme kodu, içerik servisi, connector push, config, /admin panel, Player'ı servis. Çalıştır: `node cloud/server.js` (:4000). Uçtan uca doğrulandı.
-- **Faz 3:** **MenuBoard OS** (Pi imajı) — kiosk + ajan + zero-touch pairing + OTA + CI .img.
+- **Faz 3 — MVP (bitti):** **MenuBoard OS** kiosk provisioning (`os/install.sh`) — taze Pi OS Lite → tek komutla tam-ekran Chromium kiosk (menubord.com.tr), ekran-açık, auto-recovery, dikey/yatay, OTA (URL). Flash+kurulum: `os/README.md`. (Sonraki: pi-gen+CI ile hazır `.img`, zero-touch hotspot onboarding, overlayfs, watchdog — §7.)
 - **Faz 4 (devam):** Platform/panel'i büyüt — gerçek DB, hesap/çoklu-şube, tasarım kataloğu, deploy (menubord.com.tr).
 - **Faz 5:** Etkinlik motoru (özel gün + spor takvimi) + tasarım otomasyonu.
 - **Faz 6:** Çok-ekran wall (dilimleme + senkron).
