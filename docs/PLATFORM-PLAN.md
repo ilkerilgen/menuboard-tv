@@ -91,9 +91,10 @@ Klavye/mouse **hiç gerekmeden** çalışan appliance (Yodeck disiplini).
 
 ## 11. Yol haritası (taslak)
 - **Faz 1 (bitti):** Statik menü Player (TV app).
-- **Faz 2:** Player'ı **web + viewport-oransal** yap; `:3001` API'den canlı veri (kiosk-seçili ürünler).
+- **Faz 2 (bitti):** Web Player (`player/`) — viewport scale-to-fit + auto-fit, veri-güdümlü (content.json), offline (localStorage+SW), cilalı tasarım, dikey/yatay. Canlı: claude.ai/artifact/NQCN5N3je5ycUC6XMXpELn. (Not: `:3001`'den canlı veri connector'a devredildi — §5.1 cloud-first.)
+- **Faz 4 — MVP (bitti):** Cloud backend (`cloud/server.js`, bağımlılıksız Node) — cihaz register/eşleme kodu, içerik servisi, connector push, config, /admin panel, Player'ı servis. Çalıştır: `node cloud/server.js` (:4000). Uçtan uca doğrulandı.
 - **Faz 3:** **MenuBoard OS** (Pi imajı) — kiosk + ajan + zero-touch pairing + OTA + CI .img.
-- **Faz 4:** Platform/panel (menuboard.com.tr) — cihaz yönetimi, tasarım kataloğu, eşleme.
+- **Faz 4 (devam):** Platform/panel'i büyüt — gerçek DB, hesap/çoklu-şube, tasarım kataloğu, deploy (menuboard.com.tr).
 - **Faz 5:** Etkinlik motoru (özel gün + spor takvimi) + tasarım otomasyonu.
 - **Faz 6:** Çok-ekran wall (dilimleme + senkron).
 - **Faz 7:** Sıramatik şeridi (sesli).
