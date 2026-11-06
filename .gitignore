@@ -18,3 +18,7 @@ local.properties
 
 # Cloud çalışma verisi (cihaz kayıtları)
 cloud/data/
+
+# Passenger (SiteGround) restart dizini
+tmp/
+node_modules/

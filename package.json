@@ -1,0 +1,14 @@
+{
+  "name": "menuboard",
+  "version": "0.1.0",
+  "private": true,
+  "type": "commonjs",
+  "description": "MenuBoard — çok-POS'lu dijital menü-panosu platformu (Player + Cloud + Connector)",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

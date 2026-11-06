@@ -1,0 +1,2 @@
+# Passenger bu klasörü statik public kökü olarak bekler; boş tutuyoruz ki
+# tüm istekler Node uygulamasına (app.js) yönlensin. İçerik Player'ı app servis eder.
