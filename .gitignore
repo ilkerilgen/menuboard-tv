@@ -15,3 +15,6 @@ keystore/
 local.properties
 *.iml
 .DS_Store
+
+# Cloud çalışma verisi (cihaz kayıtları)
+cloud/data/

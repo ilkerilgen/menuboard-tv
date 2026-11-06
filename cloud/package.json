@@ -1,0 +1,10 @@
+{
+  "name": "menuboard-cloud",
+  "version": "0.1.0",
+  "private": true,
+  "description": "MenuBoard Cloud — MVP backend (bağımlılıksız Node http): cihaz eşleme + içerik servisi + connector push",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

@@ -180,31 +180,76 @@
   function saveLocal(c) { try { localStorage.setItem("mb_content", JSON.stringify(c)); } catch (e) {} }
   function loadLocal() { try { var s = localStorage.getItem("mb_content"); return s ? JSON.parse(s) : null; } catch (e) { return null; } }
 
-  function loadContent() {
-    // network-first: taze içerik al, yerele yedekle
-    fetch(CONTENT_URL, { cache: "no-store" })
-      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-      .then(function (c) { render(c); saveLocal(c); status(true); })
-      .catch(function () {
-        // offline: en son yerel içeriği göster (SW + localStorage)
-        var c = loadLocal();
-        if (c) { render(c); status(false); }
-        else { console.error("içerik yüklenemedi ve yerel yedek yok"); }
-      });
+  // ===== Bulut istemcisi (cloud-first) =====
+  var params = new URLSearchParams(location.search);
+  var CLOUD = params.get("cloud") || window.MB_CLOUD || "";
+  if (CLOUD && !/\/$/.test(CLOUD)) CLOUD += "/";
+  var DEVKEY = "mb_device_id";
+  function devId() { try { return localStorage.getItem(DEVKEY); } catch (e) { return null; } }
+  function setDev(id) { try { localStorage.setItem(DEVKEY, id); } catch (e) {} }
+
+  function getJSON(u) { return fetch(u, { cache: "no-store" }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }); }
+  function postJSON(u, b) {
+    return fetch(u, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(b || {}) })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); });
   }
 
+  function setOrientByViewport() {
+    var o = (window.innerWidth >= window.innerHeight) ? "landscape" : "portrait";
+    document.documentElement.setAttribute("data-orient", o);
+    var ref = REF[o];
+    document.documentElement.style.setProperty("--cw", ref[0] + "px");
+    document.documentElement.style.setProperty("--ch", ref[1] + "px");
+    return o;
+  }
+
+  function showPairing(code) {
+    setOrientByViewport();
+    document.getElementById("stage").innerHTML =
+      '<div class="pair"><div class="pair-card">' +
+      '<div class="pair-emblem"><svg viewBox="0 0 24 24" class="ic">' + ICONS.emblem + '</svg></div>' +
+      '<div class="pair-ttl">MENUBOARD</div>' +
+      '<div class="pair-sub">Bu ekranı eşlemek için panelde aşağıdaki kodu girin</div>' +
+      '<div class="pair-code">' + esc(code) + '</div>' +
+      '<div class="pair-host">menuboard.com.tr</div>' +
+      '</div></div>';
+    scaleStage();
+  }
+
+  function applyContent(c) { render(c); saveLocal(c); status(true); }
+
+  function cloudTick() {
+    var ensure = devId()
+      ? Promise.resolve(devId())
+      : postJSON(CLOUD + "api/device/register", {}).then(function (d) { setDev(d.id); return d.id; });
+    ensure.then(function (id) {
+      return getJSON(CLOUD + "api/device/" + id + "/content");
+    }).then(function (data) {
+      if (data && data.paired === false) { showPairing(data.code); }
+      else { applyContent(data); }
+    }).catch(function () {
+      var c = loadLocal();
+      if (c) { render(c); status(false); }
+    });
+  }
+
+  function localTick() {
+    getJSON(CONTENT_URL).then(function (c) { render(c); saveLocal(c); status(true); })
+      .catch(function () { var c = loadLocal(); if (c) { render(c); status(false); } });
+  }
+
+  var tickFn = CLOUD ? cloudTick : localTick;
+
   window.addEventListener("resize", function () { scaleStage(); fitWrap(); });
-  window.addEventListener("online", function () { status(true); loadContent(); });
+  window.addEventListener("online", function () { status(true); tickFn(); });
   window.addEventListener("offline", function () { status(false); });
   setInterval(tick, 15000);
-  // içeriği periyodik tazele (bulut güncellenince yakala)
-  setInterval(loadContent, 5 * 60 * 1000);
-
-  loadContent();
+  setInterval(tickFn, CLOUD ? 8000 : 5 * 60 * 1000); // bulut modunda sık poll (eşleme + güncelleme)
+  tickFn();
 
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", function () {
-      navigator.serviceWorker.register("sw.js").catch(function (e) { console.warn("SW kayıt hatası", e); });
+      navigator.serviceWorker.register("sw.js").catch(function () {});
     });
   }
 })();

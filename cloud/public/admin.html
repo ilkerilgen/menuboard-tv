@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MenuBoard — Panel</title>
+<style>
+  :root{--bg:#111316;--card:#1e2023;--hi:#282a2d;--amber:#f2be71;--ox:#801222;--txt:#e2e2e6;--mut:#bcc8d3;}
+  *{box-sizing:border-box;} body{margin:0;background:var(--bg);color:var(--txt);font:15px/1.5 system-ui,Segoe UI,Roboto,sans-serif;}
+  header{padding:18px 24px;background:#0c0e11;border-bottom:3px solid var(--amber);display:flex;align-items:center;gap:12px;}
+  header h1{font-size:20px;margin:0;letter-spacing:.08em;color:var(--amber);text-transform:uppercase;}
+  .wrap{max-width:1000px;margin:0 auto;padding:24px;}
+  .card{background:var(--card);border:1px solid #333;border-radius:10px;padding:18px;margin-bottom:18px;}
+  h2{font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--amber);margin:0 0 12px;}
+  label{display:block;font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em;margin:8px 0 4px;}
+  input,select,button{font:inherit;padding:10px 12px;border-radius:8px;border:1px solid #3a3a3a;background:var(--hi);color:var(--txt);}
+  button{background:var(--ox);color:var(--amber);border:none;font-weight:700;cursor:pointer;letter-spacing:.03em;}
+  button.alt{background:var(--hi);color:var(--txt);border:1px solid #444;}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;}
+  table{width:100%;border-collapse:collapse;}
+  th,td{text-align:left;padding:10px 8px;border-bottom:1px solid #2a2a2a;font-size:14px;}
+  th{color:var(--mut);font-size:11px;text-transform:uppercase;letter-spacing:.06em;}
+  .code{font-family:ui-monospace,monospace;font-size:20px;font-weight:700;color:#fff;letter-spacing:.1em;}
+  .pill{padding:3px 10px;border-radius:6px;font-size:12px;font-weight:700;}
+  .pill.on{background:#123d24;color:#4ade80;} .pill.off{background:#3d2a12;color:var(--amber);}
+  .muted{color:var(--mut);font-size:13px;}
+  .ok{color:#4ade80;} .err{color:#ff8a8a;}
+</style>
+</head>
+<body>
+<header><h1>MenuBoard Panel</h1><span class="muted">cihaz yönetimi · MVP</span></header>
+<div class="wrap">
+
+  <div class="card">
+    <h2>Yeni cihaz eşle</h2>
+    <p class="muted">Ekranda görünen 6 haneli kodu girin.</p>
+    <div class="row">
+      <div><label>Eşleme kodu</label><input id="code" inputmode="numeric" placeholder="123456" maxlength="6" style="width:140px" /></div>
+      <div><label>İşletme adı</label><input id="name" placeholder="Costa Cafe" style="width:220px" /></div>
+      <div><label>Yön</label>
+        <select id="orient"><option value="auto">Otomatik</option><option value="landscape">Yatay</option><option value="portrait">Dikey</option></select>
+      </div>
+      <button onclick="pair()">Eşle</button>
+      <span id="pairMsg" class="muted"></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Cihazlar</h2>
+    <table>
+      <thead><tr><th>Durum</th><th>Kod / Ad</th><th>Yön</th><th>İşlemler</th></tr></thead>
+      <tbody id="devRows"><tr><td colspan="4" class="muted">yükleniyor…</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+const api = (p,o) => fetch(p,o).then(r=>r.json());
+
+async function pair(){
+  const code=document.getElementById('code').value.trim();
+  const name=document.getElementById('name').value.trim();
+  const orientation=document.getElementById('orient').value;
+  const msg=document.getElementById('pairMsg');
+  if(code.length!==6){ msg.className='err'; msg.textContent='Kod 6 haneli olmalı'; return; }
+  const r=await api('/api/pair',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code,name,orientation})});
+  if(r.ok){ msg.className='ok'; msg.textContent='Eşlendi: '+r.name; document.getElementById('code').value=''; document.getElementById('name').value=''; load(); }
+  else { msg.className='err'; msg.textContent = r.error==='code_not_found'?'Kod bulunamadı / zaten eşli':'Hata'; }
+}
+
+async function setOrient(id, v){ await api('/api/device/'+id+'/config',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({orientation:v})}); load(); }
+
+async function pushSample(id){
+  const payload={categories:[
+    {title:"Kahveler", icon:"skillet", unit:"ADET", rows:[
+      {name:"Espresso", sub:"Tek shot · çekirdek günlük", price:"70", chip:{text:"Taze",style:"sec"}},
+      {name:"Latte", sub:"Süt köpüğü · sıcak/soğuk", price:"110", chip:{text:"Favori",style:"prim"}},
+      {name:"Filtre Kahve", sub:"Günün demi", price:"90"}
+    ]},
+    {title:"Atıştırmalık", icon:"beef", unit:"ADET", rows:[
+      {name:"Cheeseburger", sub:"180gr köfte · cheddar", price:"240", chip:{text:"Izgara",style:"prim"}},
+      {name:"Patates", sub:"Çıtır · baharatlı", price:"95"}
+    ]}
+  ]};
+  const r=await api('/api/device/'+id+'/products',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  alert(r.ok?'Örnek ürünler gönderildi (connector push simülasyonu)':'Hata');
+}
+
+async function load(){
+  const {devices}=await api('/api/devices');
+  const tb=document.getElementById('devRows');
+  if(!devices.length){ tb.innerHTML='<tr><td colspan="4" class="muted">henüz cihaz yok — Player\'ı açın, kodu buraya girin</td></tr>'; return; }
+  tb.innerHTML = devices.map(d=>{
+    const status = d.paired?'<span class="pill on">EŞLİ</span>':'<span class="pill off">BEKLİYOR</span>';
+    const codeOrName = d.paired ? ('<b>'+(d.name||'')+'</b>') : ('<span class="code">'+d.code+'</span>');
+    const orient = d.paired
+      ? '<select onchange="setOrient(\''+d.id+'\',this.value)">'+
+        ['auto','landscape','portrait'].map(o=>'<option value="'+o+'"'+(d.orientation===o?' selected':'')+'>'+({auto:'Otomatik',landscape:'Yatay',portrait:'Dikey'})[o]+'</option>').join('')+'</select>'
+      : '<span class="muted">—</span>';
+    const actions = d.paired ? '<button class="alt" onclick="pushSample(\''+d.id+'\')">Örnek ürün push</button>' : '<span class="muted">kodu eşleyin</span>';
+    return '<tr><td>'+status+'</td><td>'+codeOrName+'</td><td>'+orient+'</td><td>'+actions+'</td></tr>';
+  }).join('');
+}
+load(); setInterval(load, 3000);
+</script>
+</body>
+</html>
