@@ -41,7 +41,12 @@ Pano, özel günlerde otomatik olarak kutlama temasına geçer:
 | **SQL tabanlı diğer POS** | **Bağlantı applet'i** — yerelde DB okur, platforma push | 🔜 |
 | **Cloud tabanlı POS** | **Bağlantı applet'i** — onların bulut API'si → platform | 🔜 |
 
-> Not: Pano **doğrudan yerel POS'a** mı bağlanır yoksa POS platforma mı **push** eder — netleştirilecek (bkz. Açık Sorular).
+### 5.1 Mimari karar — CLOUD-FIRST (2026-11-06, KİLİTLİ)
+**Her şey bulutta.** Gerekçe: karmaşıklık kalkar + yönetim kolaylaşır.
+- Akış: `[POS] → [Connector: normalize + PUSH] → [menuboard.com.tr bulut: veri + tasarım + olay motoru + compose + yönetim] → [Player: bulut URL'sini açar]`
+- **Player = ince istemci:** cihaza özel bir **bulut URL'si** açan Chromium kiosk; POS protokolü/yerel keşif yok. Pi, Android, Samsung SSSP URL Launcher — hepsinde aynı.
+- **Connector'lar artık PUSH ajanı:** ArtıPOS/POS PAYMENTS dahil hepsi kiosk-seçili ürünleri buluta **yollar** (Player artık `:3001`'i doğrudan okumaz; connector bu API'yi okuyup push eder).
+- **ZORUNLU güvence — offline cache:** Player son servis edilen içeriği (tasarım+veri+video) **yerelde önbelleğe** alır; internet kesilince **son haliyle gösterime devam eder** (fiyat güncellemesi bağlanınca gelir). Menü panosu için yeterli (Yodeck modeli).
 
 ## 6. Donanım kararı — KİLİTLİ
 **Raspberry Pi 5 (ana/referans) + Raspberry Pi 4 (ucuz giriş).**
@@ -79,7 +84,7 @@ Klavye/mouse **hiç gerekmeden** çalışan appliance (Yodeck disiplini).
 1. Özel-gün/spor teması **tüm ekranı mı** kaplasın yoksa menü üstü **şerit/köşe** kutlaması mı?
 2. Takvim **otomatik mi** geçsin, işletme **onayıyla mı**?
 3. Çoklu-inanç günlerinde işletme **hangi setleri göstereceğini seçebilsin mi**?
-4. Pano **doğrudan yerel POS'a** mı bağlanır, yoksa POS **platforma push** mu eder (mimari çekirdek kararı)?
+4. ✅ ÇÖZÜLDÜ (2026-11-06) → bkz. §5.1 **CLOUD-FIRST** (POS → connector push → bulut; Player bulut URL + offline cache).
 5. Applet'ler sadece **ürün+fiyat** mı, yoksa stok/kampanya da mı gönderir?
 6. Abonelik/çoklu-şube/marka yönetimi paneli kapsamı?
 7. Çoğunluk kaç ekran olacak (2 mi, 4+ duvar sık mı)? Bezel/boyut standart mı?
