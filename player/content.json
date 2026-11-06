@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "orientation": "landscape",
+  "business": {
+    "name": "GURME KASAP",
+    "sub": "DRY AGED",
+    "badge": "Günlük Taze Kesim & Yerli Besi",
+    "live": "Günün Fırsatları"
+  },
+  "status": {
+    "left": "Canlı Kesim & Mahzen Durumu",
+    "right": "Vet. Kontrollü • Helal"
+  },
+  "featured": {
+    "title": "Günün Öne Çıkan Kesimleri",
+    "tag": "Özel Dinlendirme",
+    "items": [
+      {
+        "name": "Dry Aged Dana Antrikot",
+        "desc": "Balıkesir Düve • Mermersi Doku • Kalın Dilim veya Blok",
+        "price": "780", "unit": "₺ / kg",
+        "tint": "linear-gradient(135deg,#3a1418,#6b2b1a 60%,#2a1512)",
+        "badges": [
+          { "text": "%10 Ustadan Tavsiye", "style": "amber" },
+          { "text": "28 Gün Dry Aged", "style": "dark" }
+        ],
+        "tags": [
+          { "text": "Marbling Skoru: A+", "amber": true },
+          { "text": "Döküm / Izgara" },
+          { "text": "Taze Çiftlik" }
+        ]
+      },
+      {
+        "name": "Kuzu Kalem Pirzola",
+        "desc": "Doğal Otlak Besi • Özel Biberiyeli Zeytinyağı Marinasyonu",
+        "price": "840", "unit": "₺ / kg",
+        "tint": "linear-gradient(135deg,#2b1a10,#5a3a1e 55%,#20140c)",
+        "badges": [
+          { "text": "Trakya Kıvırcık", "style": "sec" },
+          { "text": "Biberiye & Tuz Hediyeli", "style": "prim" }
+        ],
+        "tags": [
+          { "text": "Taze Ayıklanmış", "amber": true },
+          { "text": "Hassas Kemikli" },
+          { "text": "Tavaya / Izgaraya Hazır" }
+        ]
+      }
+    ]
+  },
+  "categories": [
+    {
+      "title": "Dana Grubu • Yerli Besi", "icon": "beef", "unit": "KG",
+      "rows": [
+        { "name": "Dana Kıyma", "sub": "%15 Yağlı • Günlük Yemeklik Çift Çekim", "price": "520", "chip": { "text": "Taze Çekim", "style": "sec" } },
+        { "name": "Dana Kuşbaşı", "sub": "Tranç & But • Yumuşak Güveçlik", "price": "560", "chip": { "text": "Dinlenmiş" } },
+        { "name": "Dana Bonfile", "sub": "Sıfır Sinir • Madalyon veya Blok Kesim", "price": "980", "chip": { "text": "Ultra Yumuşak", "style": "prim" } },
+        { "name": "Dana Kontrfile", "sub": "Özel Yağ Kuşağı • İnce veya Kalın Dilim", "price": "720", "chip": { "text": "Biftek" } },
+        { "name": "Dana Gerdan", "sub": "İlikli & Kolajen Deposu • Çorbalık", "price": "460", "chip": { "text": "Haşlamalık" } }
+      ]
+    },
+    {
+      "title": "Kuzu & Doğal Otlak", "icon": "grass", "unit": "KG",
+      "rows": [
+        { "name": "Kuzu Gerdan & İncik", "sub": "Tandır ve Ağır Pişirme için İdeal", "price": "590", "chip": { "text": "Fırınlık", "style": "sec" } },
+        { "name": "Kuzu Kıyma", "sub": "Kuzu Boşluk ve But Karışımı • Kokusu Hafif", "price": "610", "chip": { "text": "Kebaplık" } },
+        { "name": "Kuzu Külbastı", "sub": "Kemiksiz But İnce Dilim • Kekikli", "price": "760", "chip": { "text": "Tavaya Hazır", "style": "prim" } }
+      ]
+    },
+    {
+      "title": "Şarküteri & Özel Mahzen", "icon": "skillet", "unit": "KG",
+      "rows": [
+        { "name": "Geleneksel Kasap Sucuğu", "sub": "Doğal Bağırsak • Acılı / Acısız Seçeneği", "price": "640", "chip": { "text": "Fermente", "style": "sec" } },
+        { "name": "Gurme Kasap Köftesi", "sub": "Özel Baharat Harcı • Katkısız & Ekmeksiz", "price": "540", "chip": { "text": "Izgaraya Hazır", "style": "prim" } },
+        { "name": "Dry Aged T-Bone Steak", "sub": "Bonfile & Kontrfile İkisi Bir Arada", "price": "860", "chip": { "text": "21 Gün Dinlenmiş", "style": "amberText" } }
+      ]
+    }
+  ],
+  "services": {
+    "title": "Ustanın Notu & Tezgah Hizmetleri",
+    "items": [
+      { "title": "Ücretsiz Dilimleme & Marinasyon", "desc": "Etinizi arzu ettiğiniz kalınlıkta kesiyor; taze biberiye, sarımsak ve sızma zeytinyağı ile marine ediyoruz." },
+      { "title": "Vakumlu Paketleme & Soğuk Zincir", "desc": "Hava almaz koruyucu ambalaj ile tazeliğini kaybetmeden +4°C soğutmalı araçlarımızla kapınıza ulaştırıyoruz." }
+    ],
+    "assurance": "%100 Yerli Besi • Veteriner Hekim Onaylı Helal Kesim Garantisi"
+  },
+  "footer": {
+    "left": "%100 Yerli Besi & Soğuk Zincir Garantisi",
+    "hotline": "0850 840 ET 00"
+  },
+  "event": null,
+  "ticker": null
+}

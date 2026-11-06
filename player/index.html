@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<title>MenuBoard Player</title>
+<link rel="stylesheet" href="player.css" />
+</head>
+<body>
+  <!-- Ölçeklenen signage kanvası: tasarım sabit referans boyutta çizilir, ekrana sığacak şekilde scale edilir -->
+  <div id="screen">
+    <div id="stage" aria-live="off">
+      <!-- içerik player.js tarafından content.json'dan render edilir -->
+    </div>
+    <!-- bağlantı/yükleme durumu rozeti (köşe) -->
+    <div id="statusdot" title="durum"></div>
+  </div>
+  <script src="player.js"></script>
+</body>
+</html>
