@@ -1,11 +1,11 @@
 # MenuBoard — Platform Planı (v0.1)
 
-> Bu doküman, `menuboard.com.tr` platformunun vizyon + mimari + kararlarını tutar.
+> Bu doküman, `menubord.com.tr` platformunun vizyon + mimari + kararlarını tutar.
 > Windows'tan **Ubuntu'ya geçiş** sırasında bağlam kaybolmasın diye yazıldı; yaşayan belgedir, konuştukça güncellenir.
 > Tarih: 2026-11-04.
 
 ## 1. Vizyon
-`menuboard.com.tr` — İlgen/NTX'in **yan markası**. **Çok-POS'lu dijital menü-panosu platformu.** Ürünler hangi POS'ta tutuluyorsa oradan akar; TV/panolar bu platformdan beslenir. Değer önermesi: **"sıfır tasarım derdi, sıfır ekstra maliyet, hep taze ve işletmeye özel pano."**
+`menubord.com.tr` — İlgen/NTX'in **yan markası**. **Çok-POS'lu dijital menü-panosu platformu.** Ürünler hangi POS'ta tutuluyorsa oradan akar; TV/panolar bu platformdan beslenir. Değer önermesi: **"sıfır tasarım derdi, sıfır ekstra maliyet, hep taze ve işletmeye özel pano."**
 
 ## 2. Hedef kitle (şimdilik)
 Küçük işletmeler, **1–birkaç şubeli**: ☕ kafeler, 🍔 hamburgerciler, 🥙 dönerciler, 🍺 barlar.
@@ -43,7 +43,7 @@ Pano, özel günlerde otomatik olarak kutlama temasına geçer:
 
 ### 5.1 Mimari karar — CLOUD-FIRST (2026-11-06, KİLİTLİ)
 **Her şey bulutta.** Gerekçe: karmaşıklık kalkar + yönetim kolaylaşır.
-- Akış: `[POS] → [Connector: normalize + PUSH] → [menuboard.com.tr bulut: veri + tasarım + olay motoru + compose + yönetim] → [Player: bulut URL'sini açar]`
+- Akış: `[POS] → [Connector: normalize + PUSH] → [menubord.com.tr bulut: veri + tasarım + olay motoru + compose + yönetim] → [Player: bulut URL'sini açar]`
 - **Player = ince istemci:** cihaza özel bir **bulut URL'si** açan Chromium kiosk; POS protokolü/yerel keşif yok. Pi, Android, Samsung SSSP URL Launcher — hepsinde aynı.
 - **Connector'lar artık PUSH ajanı:** ArtıPOS/POS PAYMENTS dahil hepsi kiosk-seçili ürünleri buluta **yollar** (Player artık `:3001`'i doğrudan okumaz; connector bu API'yi okuyup push eder).
 - **ZORUNLU güvence — offline cache:** Player son servis edilen içeriği (tasarım+veri+video) **yerelde önbelleğe** alır; internet kesilince **son haliyle gösterime devam eder** (fiyat güncellemesi bağlanınca gelir). Menü panosu için yeterli (Yodeck modeli).
@@ -94,7 +94,7 @@ Klavye/mouse **hiç gerekmeden** çalışan appliance (Yodeck disiplini).
 - **Faz 2 (bitti):** Web Player (`player/`) — viewport scale-to-fit + auto-fit, veri-güdümlü (content.json), offline (localStorage+SW), cilalı tasarım, dikey/yatay. Canlı: claude.ai/artifact/NQCN5N3je5ycUC6XMXpELn. (Not: `:3001`'den canlı veri connector'a devredildi — §5.1 cloud-first.)
 - **Faz 4 — MVP (bitti):** Cloud backend (`cloud/server.js`, bağımlılıksız Node) — cihaz register/eşleme kodu, içerik servisi, connector push, config, /admin panel, Player'ı servis. Çalıştır: `node cloud/server.js` (:4000). Uçtan uca doğrulandı.
 - **Faz 3:** **MenuBoard OS** (Pi imajı) — kiosk + ajan + zero-touch pairing + OTA + CI .img.
-- **Faz 4 (devam):** Platform/panel'i büyüt — gerçek DB, hesap/çoklu-şube, tasarım kataloğu, deploy (menuboard.com.tr).
+- **Faz 4 (devam):** Platform/panel'i büyüt — gerçek DB, hesap/çoklu-şube, tasarım kataloğu, deploy (menubord.com.tr).
 - **Faz 5:** Etkinlik motoru (özel gün + spor takvimi) + tasarım otomasyonu.
 - **Faz 6:** Çok-ekran wall (dilimleme + senkron).
 - **Faz 7:** Sıramatik şeridi (sesli).

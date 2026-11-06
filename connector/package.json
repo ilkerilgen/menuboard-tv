@@ -1,0 +1,11 @@
+{
+  "name": "menuboard-connector",
+  "version": "0.1.0",
+  "private": true,
+  "type": "commonjs",
+  "description": "ArtıPOS/POS PAYMENTS → MenuBoard Cloud connector (kiosk ürünlerini buluta push eder)",
+  "scripts": {
+    "start": "node connector.js",
+    "mock": "node mock-pos.js"
+  }
+}

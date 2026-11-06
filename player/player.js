@@ -211,7 +211,7 @@
       '<div class="pair-ttl">MENUBOARD</div>' +
       '<div class="pair-sub">Bu ekranı eşlemek için panelde aşağıdaki kodu girin</div>' +
       '<div class="pair-code">' + esc(code) + '</div>' +
-      '<div class="pair-host">menuboard.com.tr</div>' +
+      '<div class="pair-host">menubord.com.tr</div>' +
       '</div></div>';
     scaleStage();
   }
